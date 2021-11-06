@@ -1,6 +1,13 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image, Button, SafeAreaView, TouchableOpacity, TextInput, Dimensions, ScrollView } from 'react-native';
 import { useFonts } from 'expo-font';
+import Settings from './Settings';
+import Profile from './Profile';
+
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
+const Tab = createNativeStackNavigator();
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -19,16 +26,29 @@ function Home(props) {
     }
 
     return (
+
+        <Tab.Navigator>
+            <Tab.Screen component={HomeNavigation} name="HomeNavigation" options={{ headerShown: false }} />
+            <Tab.Screen component={Settings} name="Settings" options={{ headerShown: true }} />
+            <Tab.Screen component={Profile} name="Profile" options={{ headerShown: true }} />
+        </Tab.Navigator>
+    );
+}
+
+const HomeNavigation = ({ navigation }) => {
+    return (
         <View style={styles.container}>
             <Image style={styles.topimg} source={require('./assets/UI_design_top.png')} />
             <Image style={styles.bottomimg} source={require('./assets/UI_design_bottom.png')} />
             <View style={styles.rowarrange}>
                 <Text style={{ fontFamily: "GlacialIndifference", marginLeft: 30, fontSize: 40 }}>Tae tae App</Text>
-                <TouchableOpacity>
+                <TouchableOpacity
+                    onPress={() => navigation.navigate('Settings')}>
                     <Image style={[styles.navicon, { marginTop: 7 }]} source={require('./assets/settings.png')} />
                 </TouchableOpacity>
             </View>
-            <TouchableOpacity style={styles.userprofile}>
+            <TouchableOpacity style={styles.userprofile}
+                onPress={() => navigation.navigate('Profile')}>
                 <Image style={[styles.profilepic, { width: 60, height: 60 }]} source={require('./assets/sai.jpg')} />
                 <Text style={{ textAlign: "center", marginTop: 5, fontSize: 12, fontFamily: "GlacialIndifference" }}>SAIRA</Text>
             </TouchableOpacity>
@@ -54,73 +74,139 @@ function Home(props) {
                 </View>
             </View>
 
-            <ScrollView style={styles.postsscrollview}>
-                <View style={styles.postcontainer}>
-                    <View style={styles.rowarrange}>
-                        <TouchableOpacity style={[styles.friendsbutton, { marginLeft: 25, marginTop: 10, marginBottom: 5, }]}>
-                            <Image style={styles.profilepic} source={require('./assets/christian.jpg')} />
-                        </TouchableOpacity>
+            <View style={{ height: 540 }}>
+                <ScrollView style={styles.postsscrollview}>
+                    <View style={styles.postcontainer}>
+                        <View style={styles.rowarrange}>
+                            <TouchableOpacity style={[styles.friendsbutton, { marginLeft: 25, marginTop: 10, marginBottom: 5, }]}>
+                                <Image style={styles.profilepic} source={require('./assets/christian.jpg')} />
+                            </TouchableOpacity>
+                            <View>
+                                <Text style={{ marginTop: 16, }}>Christian Angelo Navera</Text>
+                                <Text>2 hours ago</Text>
+                            </View>
+                        </View>
+                        <Text style={styles.caption}>"The quick brown fox jumps over the lazy dog" is an English-language pangram—a sentence that contains all of the letters of the English alphabet. Owing to its brevity and coherence, it has become widely known. Windowsssssssssss XP</Text>
                         <View>
-                            <Text style={{ marginTop: 16, }}>Christian Angelo Navera</Text>
-                            <Text>2 hours ago</Text>
+                            <TouchableOpacity style={styles.postimgbtn}>
+                                <Image style={styles.postimg} source={require('./assets/windowsxp.jpg')} />
+                            </TouchableOpacity>
+                        </View>
+
+                        <View style={styles.besideoptions}>
+                            <TouchableOpacity style={[styles.besideiconbutton, { marginTop: 20, marginBottom: 50 }]}>
+                                <Image style={styles.besideicon} source={require('./assets/option.png')} />
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.besideiconbutton}>
+                                <Image style={styles.besideicon} source={require('./assets/heart.png')} />
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.besideiconbutton}>
+                                <Image style={styles.besideicon} source={require('./assets/comment.png')} />
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.besideiconbutton}>
+                                <Image style={styles.besideicon} source={require('./assets/share.png')} />
+                            </TouchableOpacity>
                         </View>
                     </View>
-                    <Text style={styles.caption}>"The quick brown fox jumps over the lazy dog" is an English-language pangram—a sentence that contains all of the letters of the English alphabet. Owing to its brevity and coherence, it has become widely known. Windowsssssssssss XP</Text>
-                    <View>
-                        <TouchableOpacity style={styles.postimgbtn}>
-                            <Image style={styles.postimg} source={require('./assets/windowsxp.jpg')} />
-                        </TouchableOpacity>
-                    </View>
 
-                    <View style={styles.besideoptions}>
-                        <TouchableOpacity style={[styles.besideiconbutton, { marginTop: 20, marginBottom: 50 }]}>
-                            <Image style={styles.besideicon} source={require('./assets/option.png')} />
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.besideiconbutton}>
-                            <Image style={styles.besideicon} source={require('./assets/heart.png')} />
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.besideiconbutton}>
-                            <Image style={styles.besideicon} source={require('./assets/comment.png')} />
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.besideiconbutton}>
-                            <Image style={styles.besideicon} source={require('./assets/share.png')} />
-                        </TouchableOpacity>
-                    </View>
-                </View>
-
-                <View style={styles.postcontainer}>
-                    <View style={styles.rowarrange}>
-                        <TouchableOpacity style={[styles.friendsbutton, { marginLeft: 25, marginTop: 10, marginBottom: 5, }]}>
-                            <Image style={styles.profilepic} source={require('./assets/fred.jpg')} />
-                        </TouchableOpacity>
+                    <View style={styles.postcontainer}>
+                        <View style={styles.rowarrange}>
+                            <TouchableOpacity style={[styles.friendsbutton, { marginLeft: 25, marginTop: 10, marginBottom: 5, }]}>
+                                <Image style={styles.profilepic} source={require('./assets/fred.jpg')} />
+                            </TouchableOpacity>
+                            <View>
+                                <Text style={{ marginTop: 16, }}>Frederick Louis Marlang</Text>
+                                <Text>2 hours ago</Text>
+                            </View>
+                        </View>
+                        <Text style={styles.caption}>Face reveal</Text>
                         <View>
-                            <Text style={{ marginTop: 16, }}>Frederick Louis Marlang</Text>
-                            <Text>2 hours ago</Text>
+                            <TouchableOpacity style={styles.postimgbtn}>
+                                <Image style={styles.postimg} source={require('./assets/monalisa.jpg')} />
+                            </TouchableOpacity>
+                        </View>
+                        <View style={styles.besideoptions}>
+                            <TouchableOpacity style={[styles.besideiconbutton, { marginTop: 20, marginBottom: 50 }]}>
+                                <Image style={styles.besideicon} source={require('./assets/option.png')} />
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.besideiconbutton}>
+                                <Image style={styles.besideicon} source={require('./assets/heart.png')} />
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.besideiconbutton}>
+                                <Image style={styles.besideicon} source={require('./assets/comment.png')} />
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.besideiconbutton}>
+                                <Image style={styles.besideicon} source={require('./assets/share.png')} />
+                            </TouchableOpacity>
                         </View>
                     </View>
-                    <Text style={styles.caption}>Face reveal</Text>
-                    <View>
-                        <TouchableOpacity style={styles.postimgbtn}>
-                            <Image style={styles.postimg} source={require('./assets/monalisa.jpg')} />
-                        </TouchableOpacity>
-                    </View>
-                    <View style={styles.besideoptions}>
-                        <TouchableOpacity style={[styles.besideiconbutton, { marginTop: 20, marginBottom: 50 }]}>
-                            <Image style={styles.besideicon} source={require('./assets/option.png')} />
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.besideiconbutton}>
-                            <Image style={styles.besideicon} source={require('./assets/heart.png')} />
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.besideiconbutton}>
-                            <Image style={styles.besideicon} source={require('./assets/comment.png')} />
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.besideiconbutton}>
-                            <Image style={styles.besideicon} source={require('./assets/share.png')} />
-                        </TouchableOpacity>
-                    </View>
-                </View>
 
-            </ScrollView>
+                    <View style={styles.postcontainer}>
+                        <View style={styles.rowarrange}>
+                            <TouchableOpacity style={[styles.friendsbutton, { marginLeft: 25, marginTop: 10, marginBottom: 5, }]}>
+                                <Image style={styles.profilepic} source={require('./assets/marialy.jpg')} />
+                            </TouchableOpacity>
+                            <View>
+                                <Text style={{ marginTop: 16, }}>Marialy Detondoy</Text>
+                                <Text>2 hours ago</Text>
+                            </View>
+                        </View>
+                        <Text style={styles.caption}>Lugaw</Text>
+                        <View>
+                            <TouchableOpacity style={styles.postimgbtn}>
+                                <Image style={styles.postimg} source={require('./assets/2nd_pic.png')} />
+                            </TouchableOpacity>
+                        </View>
+
+                        <View style={styles.besideoptions}>
+                            <TouchableOpacity style={[styles.besideiconbutton, { marginTop: 20, marginBottom: 50 }]}>
+                                <Image style={styles.besideicon} source={require('./assets/option.png')} />
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.besideiconbutton}>
+                                <Image style={styles.besideicon} source={require('./assets/heart.png')} />
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.besideiconbutton}>
+                                <Image style={styles.besideicon} source={require('./assets/comment.png')} />
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.besideiconbutton}>
+                                <Image style={styles.besideicon} source={require('./assets/share.png')} />
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+
+                    <View style={styles.postcontainer}>
+                        <View style={styles.rowarrange}>
+                            <TouchableOpacity style={[styles.friendsbutton, { marginLeft: 25, marginTop: 10, marginBottom: 5, }]}>
+                                <Image style={styles.profilepic} source={require('./assets/ore.jpg')} />
+                            </TouchableOpacity>
+                            <View>
+                                <Text style={{ marginTop: 16, }}>Jon Arvy Enriquez</Text>
+                                <Text>5 hours ago</Text>
+                            </View>
+                        </View>
+                        <Text style={styles.caption}>AAAAAAAAAAAAAAAAAAAAAAAAAAAAA</Text>
+                        <View>
+
+                        </View>
+
+                        <View style={styles.besideoptions}>
+                            <TouchableOpacity style={[styles.besideiconbutton, { marginTop: 20, marginBottom: 50 }]}>
+                                <Image style={styles.besideicon} source={require('./assets/option.png')} />
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.besideiconbutton}>
+                                <Image style={styles.besideicon} source={require('./assets/heart.png')} />
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.besideiconbutton}>
+                                <Image style={styles.besideicon} source={require('./assets/comment.png')} />
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.besideiconbutton}>
+                                <Image style={styles.besideicon} source={require('./assets/share.png')} />
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+
+                </ScrollView>
+            </View>
 
 
             <View style={styles.navbar}>
@@ -146,7 +232,6 @@ function Home(props) {
         </View >
     );
 }
-
 const styles = StyleSheet.create({
     container: {
         flex: 1,

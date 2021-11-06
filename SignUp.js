@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, Text, View, Image, Button, SafeAreaView, TouchableOpacity, TextInput, Dimensions } from 'react-native';
 import { useFonts } from 'expo-font';
+import { Picker } from '@react-native-picker/picker';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 function SignUp(props) {
 
@@ -17,6 +20,8 @@ function SignUp(props) {
     if (!loaded) {
         console.log("null");
     }
+
+    const [selectedGender, setSelectedGender] = useState();
 
     return (
         <View style={styles.container}>
@@ -35,7 +40,14 @@ function SignUp(props) {
                 <TextInput style={styles.textinput} secureTextEntry={true} placeholder="Create your Password" />
                 <TextInput style={styles.textinput} secureTextEntry={true} placeholder="Re-type your Password" />
                 <View style={styles.sidetosidecontainer}>
-                    <TextInput style={[styles.textinput, { width: 145, marginRight: 5 }]} placeholder="Gender" />
+                    <Picker style={[styles.textinput, { width: 145, marginRight: 5, color: "#000" }]}
+                        selectedValue={selectedGender}
+                        mode="dropdown"
+                        onValueChange={(itemValue, itemIndex) => setSelectedGender(itemValue)}>
+                        <Picker.Item label="Male" value="male" />
+                        <Picker.Item label="Female" value="female" />
+                        <Picker.Item label="Prefer to not say" value="idk" />
+                    </Picker>
                     <TextInput style={[styles.textinput, { width: 145, marginLeft: 5 }]} placeholder="Birthday" />
                 </View>
             </View>
@@ -46,7 +58,7 @@ function SignUp(props) {
             <View style={styles.buttoncontainer}>
                 <TouchableOpacity
                     style={styles.buttonstyle}
-                    onPress={() => console.log("Sign Up")}>
+                    onPress={() => console.log(selectedGender)}>
                     <Text style={styles.buttontext}>Sign Up</Text>
                 </TouchableOpacity>
             </View>
